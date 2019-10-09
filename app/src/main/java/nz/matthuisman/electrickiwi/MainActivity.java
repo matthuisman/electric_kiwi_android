@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -72,6 +74,15 @@ public class MainActivity extends AppCompatActivity {
 
         mHourSpinner.setAdapter(hoursAdapter);
         mScheduleView.setAdapter(scheduleAdapter);
+
+        final SwipeRefreshLayout mSwipeRefreshLayout = findViewById(R.id.power_form);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new GetHours().execute();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         mHourSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, final int hour_pos, long id) {
