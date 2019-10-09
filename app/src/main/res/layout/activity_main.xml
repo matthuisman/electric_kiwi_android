@@ -59,13 +59,6 @@
                 android:layout_weight="0.09" />
 
             <Button
-                android:id="@+id/button"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:onClick="onUpdate"
-                android:text="@string/set_hour" />
-
-            <Button
                 android:id="@+id/Schedule"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,15 +66,6 @@
                 android:layout_weight="0.09"
                 android:onClick="onSchedule"
                 android:text="@string/schedule" />
-
-            <Button
-                android:id="@+id/settings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_weight="0.09"
-                android:onClick="onSettings"
-                android:text="@string/settings" />
 
         </LinearLayout>
     </ScrollView>

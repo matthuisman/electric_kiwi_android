@@ -41,7 +41,6 @@ public class ElectricKiwi extends ContextWrapper{
 
     public void logout() {
         cookieJar.clear();
-
     }
 
     public void setCredentials(String email, String password) {

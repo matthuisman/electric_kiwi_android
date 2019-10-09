@@ -2,6 +2,7 @@ package nz.matthuisman.electrickiwi;
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private ElectricKiwi electricKiwi;
     private ArrayAdapter<Hour> hoursAdapter;
     private ArrayAdapter<String> scheduleAdapter;
+    private Hour currentHour;
 
     private final String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
@@ -69,6 +72,20 @@ public class MainActivity extends AppCompatActivity {
 
         mHourSpinner.setAdapter(hoursAdapter);
         mScheduleView.setAdapter(scheduleAdapter);
+
+        mHourSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, final int hour_pos, long id) {
+                Hour hour = hoursAdapter.getItem(hour_pos);
+
+                if (hour != currentHour){
+                    new SetHour().execute(hour.get_id());
+                }
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         mScheduleView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -182,15 +199,6 @@ public class MainActivity extends AppCompatActivity {
         new GetHours().execute();
     }
 
-    public void onUpdate(View view) {
-        Hour hour = (Hour) mHourSpinner.getSelectedItem();
-        new SetHour().execute(hour.get_id());
-    }
-
-    public void onSettings(View view) {
-        showSettings();
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -237,8 +245,9 @@ public class MainActivity extends AppCompatActivity {
             Hour hour = hours.get(i);
             hoursAdapter.add(hour);
             if (hour.isSelected()) {
+                currentHour = hour;
                 Util.setAlarm(this, hour, false);
-                mHourSpinner.setSelection(i);
+                mHourSpinner.setSelection(i, false);
             }
         }
 

@@ -9,7 +9,7 @@ public class Hour {
     private String name;
     private Boolean selected = false;
 
-    private Hour(String id, String name) {
+    public Hour(String id, String name) {
         this.id = id;
         this.name = name;
     }
